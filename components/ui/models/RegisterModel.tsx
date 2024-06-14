@@ -23,22 +23,22 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useModal } from "../hooks/useModel.store";
 
-export default function LoginModel({
-  open = false,
-  data = false,
-}: {
-  open?: boolean;
-  data?: boolean;
-}) {
-  const [mounted, setMounted] = useState(false);
+export const registerSchema = z.object({
+  email: z
+    .string({ message: "email is required" })
+    .email({ message: "email not valid" }),
+
+  password: z
+    .string({ message: "passwor dis required" })
+    .min(8, { message: "password should be minimum of 8 characters" }),
+  name: z.string({ message: "name is required" }),
+});
+
+export default function RegisterModel() {
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const form = useForm<z.infer<typeof loginFormSchema>>({
-    resolver: zodResolver(loginFormSchema),
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -47,12 +47,13 @@ export default function LoginModel({
 
   const router = useRouter();
 
-  function onSubmit(values: z.infer<typeof loginFormSchema>) {
+  function onSubmit(values: z.infer<typeof registerSchema>) {
     setLoading(true);
     axios
-      .post("/api/login", {
+      .post("/api/register", {
         email: values.email,
         password: values.password,
+        name: values.name,
       })
       .then(() => {
         toast.success("login successfull");
@@ -66,13 +67,11 @@ export default function LoginModel({
         setLoading(false);
       });
   }
-  const { isOpen, type, onOpen } = useModal();
-  const openH = type === "Login" && isOpen;
-  if (!mounted) {
-    return null;
-  }
+
+  const { type, isOpen, onOpen } = useModal();
+  const open = isOpen && type === "register";
   return (
-    <Dialog open={data ? open : openH}>
+    <Dialog open={open}>
       <DialogContent className='flex flex-col justify-start items-start w-full gap-9'>
         <Heading title='Welcome Back' subtitle='logint to your account' />
         <Form {...form}>
@@ -118,15 +117,31 @@ export default function LoginModel({
               )}
             />
 
+            <FormField
+              disabled={loading}
+              control={form.control}
+              name='name'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={loading}
+                      placeholder='eg. Jack Smith'
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <div className='flex flex-row justify-between items-center w-full gap-2'>
-              <span className='text-blue-500 font-bold text-sm'>
-                Forgot Password
-              </span>
               <span
                 className='text-blue-500 font-bold text-sm'
-                onClick={() => onOpen("register")}
+                onClick={() => onOpen("Login")}
               >
-                new here? Create Account
+                already a member? login
               </span>
             </div>
 
