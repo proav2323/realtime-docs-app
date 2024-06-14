@@ -67,10 +67,10 @@ export default function RegisterModel() {
       });
   }
 
-  const { type, isOpen, onOpen } = useModal();
+  const { type, isOpen, onOpen, onClose } = useModal();
   const open = isOpen && type === "register";
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onOpenChange={() => onClose()}>
       <DialogContent className='flex flex-col justify-start items-start w-full gap-9'>
         <Heading title='Welcome Back' subtitle='logint to your account' />
         <Form {...form}>

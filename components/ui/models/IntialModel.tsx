@@ -75,13 +75,16 @@ export default function LoginModel({
         setLoading(false);
       });
   }
-  const { isOpen, type, onOpen } = useModal();
+  const { isOpen, type, onOpen, onClose } = useModal();
   const openH = type === "Login" && isOpen;
   if (!mounted) {
     return null;
   }
   return (
-    <Dialog open={data ? open : openH}>
+    <Dialog
+      open={data ? open : openH}
+      onOpenChange={data ? () => {} : () => onClose()}
+    >
       <DialogContent className='flex flex-col justify-start items-start w-full gap-9'>
         <Heading title='Welcome Back' subtitle='logint to your account' />
         <Form {...form}>
