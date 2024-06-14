@@ -55,7 +55,7 @@ export default function RegisterModel() {
         name: values.name,
       })
       .then(() => {
-        toast.success("login successfull");
+        toast.success("register successfull");
         router.refresh();
         router.push("/");
       })
