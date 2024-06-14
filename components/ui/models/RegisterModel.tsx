@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Heading from "../Heading";
-import { loginFormSchema } from "@/app/page";
 import { Button } from "@/components/ui/button";
 import {
   Form,

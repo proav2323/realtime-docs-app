@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Heading from "../Heading";
-import { loginFormSchema } from "@/app/page";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,6 +21,16 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useModal } from "../hooks/useModel.store";
+
+export const loginFormSchema = z.object({
+  email: z
+    .string({ message: "email is required" })
+    .email({ message: "email not valid" }),
+
+  password: z
+    .string({ message: "passwor dis required" })
+    .min(8, { message: "password should be minimum of 8 characters" }),
+});
 
 export default function LoginModel({
   open = false,
