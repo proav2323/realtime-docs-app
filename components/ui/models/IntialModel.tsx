@@ -128,12 +128,15 @@ export default function LoginModel({
             />
 
             <div className='flex flex-row justify-between items-center w-full gap-2'>
-              <span className='text-blue-500 font-bold text-sm'>
+              <span className='text-blue-500 font-bold text-sm cursor-pointer'>
                 Forgot Password
               </span>
               <span
-                className='text-blue-500 font-bold text-sm'
-                onClick={() => onOpen("register")}
+                className='text-blue-500 font-bold text-sm cursor-pointer'
+                onClick={() => {
+                  onOpen("register");
+                  console.log("kdfjkfnk");
+                }}
               >
                 new here? Create Account
               </span>

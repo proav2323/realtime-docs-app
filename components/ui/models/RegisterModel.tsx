@@ -137,7 +137,7 @@ export default function RegisterModel() {
 
             <div className='flex flex-row justify-between items-center w-full gap-2'>
               <span
-                className='text-blue-500 font-bold text-sm'
+                className='text-blue-500 font-bold text-sm cursor-pointer'
                 onClick={() => onOpen("Login")}
               >
                 already a member? login
