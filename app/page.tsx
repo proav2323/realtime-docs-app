@@ -11,7 +11,7 @@ import LoginModel from "@/components/ui/models/IntialModel";
 export default async function Home() {
   const currentuser = await getCurrentUser();
   if (currentuser) {
-    return redirect("/app");
+    return redirect("/user");
   }
 
   return <LoginModel open data />;

@@ -56,8 +56,8 @@ export default function RegisterModel() {
       })
       .then(() => {
         toast.success("register successfull");
+        onClose();
         router.refresh();
-        router.push("/");
       })
       .catch((err) => {
         toast.error(err.response.data);
@@ -87,6 +87,7 @@ export default function RegisterModel() {
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
+                      type='email'
                       disabled={loading}
                       placeholder='eg. jacksmith@gmail.com'
                       {...field}
@@ -106,6 +107,7 @@ export default function RegisterModel() {
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
+                      type='password'
                       disabled={loading}
                       placeholder='password'
                       {...field}

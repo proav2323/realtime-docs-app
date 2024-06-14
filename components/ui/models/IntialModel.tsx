@@ -65,8 +65,8 @@ export default function LoginModel({
       })
       .then(() => {
         toast.success("login successfull");
+        onClose();
         router.refresh();
-        router.push("/");
       })
       .catch((err) => {
         toast.error(err.response.data);
@@ -101,6 +101,7 @@ export default function LoginModel({
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
+                      type='email'
                       disabled={loading}
                       placeholder='eg. jacksmith@gmail.com'
                       {...field}
@@ -120,6 +121,7 @@ export default function LoginModel({
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
+                      type='password'
                       disabled={loading}
                       placeholder='password'
                       {...field}
