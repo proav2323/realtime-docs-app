@@ -1,3 +1,4 @@
+"use client";
 import { user } from "@prisma/client";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
@@ -8,14 +9,22 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
+import Image from "next/image";
+import img from "../../public/icon.png";
+import { useTheme } from "next-themes";
 
 export default function Navbar({ currentUser }: { currentUser: user }) {
+  const theme = useTheme();
   return (
     <>
       <div className='hidden md:flex flex-row justify-between items-center sticky top-0 w-full h-[60px] dark:bg-slate-950 bg-slate-200 dark:text-white text-black px-2 py-2'>
         <div className='flex flex-row gap-2 items-center justify-center'>
+          <Image src={img} alt='logo' width={40} height={40} />
           <span className='text-xl font-bold'>Docs</span>
         </div>
 
@@ -37,7 +46,21 @@ export default function Navbar({ currentUser }: { currentUser: user }) {
             <DropdownMenuTrigger>
               <ProfileImg currentUser={currentUser} />
             </DropdownMenuTrigger>
-            <DropdownMenuContent></DropdownMenuContent>
+            <DropdownMenuContent>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <DropdownMenuItem>Theme</DropdownMenuItem>
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem onClick={() => theme.setTheme("dark")}>
+                    Dark
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => theme.setTheme("light")}>
+                    Light
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </div>
@@ -55,7 +78,21 @@ export default function Navbar({ currentUser }: { currentUser: user }) {
               <DropdownMenuTrigger>
                 <ProfileImg currentUser={currentUser} />
               </DropdownMenuTrigger>
-              <DropdownMenuContent></DropdownMenuContent>
+              <DropdownMenuContent>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>
+                    <DropdownMenuItem>Theme</DropdownMenuItem>
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem onClick={() => theme.setTheme("dark")}>
+                      Dark
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => theme.setTheme("light")}>
+                      Light
+                    </DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+              </DropdownMenuContent>
             </DropdownMenu>
           </div>
         </div>
