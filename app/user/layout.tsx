@@ -1,6 +1,7 @@
 import getCurrentUser from "@/actions/getCurrentUser";
 import Navbar from "@/components/ui/Navbar";
 import NavbarProvider from "@/components/ui/NavbarProvider";
+import { userWithDoc } from "@/types";
 import { redirect } from "next/navigation";
 
 export default async function RootLayout({
@@ -8,7 +9,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const currentUser = await getCurrentUser();
+  const currentUser: userWithDoc | null = await getCurrentUser();
 
   if (!currentUser) {
     return redirect("/");

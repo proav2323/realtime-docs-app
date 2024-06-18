@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type modelType = "Login" | "register";
+export type modelType = "Login" | "register" | "newDoc";
 
 export interface modelStore {
   type: modelType | null;

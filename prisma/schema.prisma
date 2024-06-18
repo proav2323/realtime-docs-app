@@ -20,6 +20,7 @@ model user {
   password String
   profileImg String?
   docs doc[]
+  member member[]
 }
 
 enum ROLE {
@@ -34,4 +35,15 @@ model doc {
   Text String @db.String
   createdById String @db.ObjectId
   createdBy user @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  inviteUrl String @unique
+  member member[]
+}
+
+model member {
+  id  String           @id @default(auto()) @map("_id") @db.ObjectId
+  role ROLE
+  userId String @db.ObjectId
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+  docId String @db.ObjectId
+  doc doc @relation(fields: [docId], references: [id], onDelete: Cascade)
 }

@@ -28,6 +28,7 @@ export default async function getCurrentUser() {
 
   const user = await db.user.findUnique({
     where: { email: decode.email },
+    include: { docs: true, member: true },
   });
   return user;
 }

@@ -17,9 +17,11 @@ import {
 import Image from "next/image";
 import img from "../../public/icon.png";
 import { useTheme } from "next-themes";
+import { useModal } from "./hooks/useModel.store";
 
 export default function Navbar({ currentUser }: { currentUser: user }) {
   const theme = useTheme();
+  const { onOpen } = useModal();
   return (
     <>
       <div className='hidden md:flex flex-row justify-between items-center sticky top-0 w-full h-[60px] dark:bg-slate-950 bg-slate-200 dark:text-white text-black px-2 py-2'>
@@ -39,7 +41,7 @@ export default function Navbar({ currentUser }: { currentUser: user }) {
               placeholder='Search Documents'
             />
           </div>
-          <Button variant={"outline"}>
+          <Button variant={"outline"} onClick={() => onOpen("newDoc")}>
             <Plus />
           </Button>
           <DropdownMenu>
@@ -71,7 +73,7 @@ export default function Navbar({ currentUser }: { currentUser: user }) {
           </div>
 
           <div className='flex flex-row gap-2 items-center justify-center'>
-            <Button variant={"outline"}>
+            <Button variant={"outline"} onClick={() => onOpen("newDoc")}>
               <Plus />
             </Button>
             <DropdownMenu>
