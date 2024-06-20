@@ -46,6 +46,7 @@ export default function NewDoc() {
       .then((data) => {
         toast.success("doc created successfully");
         onClose();
+        router.refresh();
         router.push(`/user/doc/${data.data.id}`);
       })
       .catch((err) => {

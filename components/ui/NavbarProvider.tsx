@@ -7,5 +7,7 @@ import { user } from "@prisma/client";
 
 export default function NavbarProvider({ currentUser }: { currentUser: user }) {
   const route = usePathname();
-  return <>{route !== "/user/doc" && <Navbar currentUser={currentUser} />}</>;
+  return (
+    <>{!route.includes("/user/doc/") && <Navbar currentUser={currentUser} />}</>
+  );
 }

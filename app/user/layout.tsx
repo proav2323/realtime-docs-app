@@ -3,6 +3,7 @@ import Navbar from "@/components/ui/Navbar";
 import NavbarProvider from "@/components/ui/NavbarProvider";
 import { userWithDoc } from "@/types";
 import { redirect } from "next/navigation";
+import "draft-js/dist/Draft.css";
 
 export default async function RootLayout({
   children,
