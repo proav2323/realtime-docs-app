@@ -16,7 +16,7 @@ export default async function RootLayout({
   }
 
   return (
-    <div className='flex flex-col h-full justify-start items-start w-full'>
+    <div className='flex flex-col h-full justify-start items-start w-full '>
       <NavbarProvider currentUser={currentUser} />
       {children}
     </div>

@@ -37,6 +37,9 @@ model doc {
   createdBy user @relation(fields: [createdById], references: [id], onDelete: Cascade)
   inviteUrl String @unique
   member member[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model member {
