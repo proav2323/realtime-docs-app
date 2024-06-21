@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ui/providers/ThemeProviders";
 import { Toaster } from "react-hot-toast";
 import ModelsProvider from "@/components/ui/providers/ModelsProvider";
+import "react-quill/dist/quill.snow.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

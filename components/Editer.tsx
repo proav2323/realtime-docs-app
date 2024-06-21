@@ -1,20 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
-import { Editor, EditorState } from "draft-js";
-import Toolbar from "./Toolbar";
-
+import React, { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 export default function Editerr() {
-  const [state, setState] = useState(() => EditorState.createEmpty());
-
-  const onChange = (editerState: EditorState) => {
-    setState(editerState);
+  const editorRef = useRef(null);
+  const [model, setModel] = useState("");
+  const onHandleChange = (e: any) => {
+    setModel(e);
   };
-
   return (
-    <div className='dark:bg-slate-800 bg-slate-300 dark:text-white text-black w-full h-full p-2 rounded-md flex flex-col gap-2'>
-      <Toolbar />
-      <Editor editorState={state} onChange={onChange} />
+    <div className='dark:bg-slate-800 bg-slate-300 dark:text-white text-black w-full h-full rounded-md flex flex-col gap-2'>
+      <ReactQuill value={model} onChange={onHandleChange} />
     </div>
   );
 }
