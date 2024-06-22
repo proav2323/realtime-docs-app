@@ -78,3 +78,37 @@
 .noScroll::-webkit-scrollbar {
   display: none;
 }
+
+.tiptap {
+  min-height: 85vh;
+  max-height: 85vh;
+  outline: none;
+  border: none;
+  width: 100%;
+}
+
+code {
+  background-color: rgb(215, 212, 212);
+  padding: 10px;
+  border-radius: calc(var(--radius) - 2px);
+}
+
+blockquote {
+  padding: 10px;
+  border-radius: calc(var(--radius) - 2px);
+}
+
+ul {
+  margin-left: 10px;
+}
+
+li {
+  list-style: circle;
+  margin-left: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  code {
+    background-color: rgb(43, 43, 43);
+  }
+}

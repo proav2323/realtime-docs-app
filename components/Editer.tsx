@@ -1,17 +1,29 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import dynamic from "next/dynamic";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Toolbar from "./Toolbar";
+
+import Link from "@tiptap/extension-link";
+import Underline from "@tiptap/extension-underline";
 export default function Editerr() {
   const editorRef = useRef(null);
   const [model, setModel] = useState("");
-  const onHandleChange = (e: any) => {
-    setModel(e);
-  };
+
+  const editor = useEditor({
+    extensions: [StarterKit, Link, Underline],
+    content: model,
+  });
+
+  const format = [""];
   return (
-    <div className='dark:bg-slate-800 bg-slate-300 dark:text-white text-black w-full h-full rounded-md flex flex-col gap-2'>
-      <ReactQuill value={model} onChange={onHandleChange} />
+    <div className='dark:text-white text-black w-full h-full rounded-md flex flex-col'>
+      <Toolbar editor={editor} />
+      <EditorContent
+        editor={editor}
+        className='w-full max-h-[85vh] min-h-[85vh] overflow-y-scroll p-2 rounded-b-md outline-none focus:outline-none dark:text-white text-black border-none focus:border-none'
+      />
     </div>
   );
 }

@@ -5,6 +5,14 @@ import { ThemeProvider } from "@/components/ui/providers/ThemeProviders";
 import { Toaster } from "react-hot-toast";
 import ModelsProvider from "@/components/ui/providers/ModelsProvider";
 import "react-quill/dist/quill.snow.css";
+import "quill/dist/quill.core.css";
+import Quill from "quill/core";
+import Toolbar from "quill/modules/toolbar";
+import Snow from "quill/themes/snow";
+
+import Bold from "quill/formats/bold";
+import Italic from "quill/formats/italic";
+import Header from "quill/formats/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={inter.className}>
+      <body className={`${inter.className} h-full`}>
         <ThemeProvider attribute='class' defaultTheme='light'>
           <ModelsProvider />
           <Toaster />
