@@ -112,3 +112,8 @@ li {
     background-color: rgb(43, 43, 43);
   }
 }
+
+a {
+  color: blue;
+  text-decoration: underline;
+}

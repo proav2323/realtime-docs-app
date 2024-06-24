@@ -7,12 +7,20 @@ import Toolbar from "./Toolbar";
 
 import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";
+import ImageExt from "@tiptap/extension-image";
+import Align from "@tiptap/extension-text-align";
 export default function Editerr() {
   const editorRef = useRef(null);
   const [model, setModel] = useState("");
 
   const editor = useEditor({
-    extensions: [StarterKit, Link, Underline],
+    extensions: [
+      StarterKit,
+      Link,
+      Underline,
+      ImageExt,
+      Align.configure({ types: ["heading", "paragraph"] }),
+    ],
     content: model,
   });
 
