@@ -1,6 +1,8 @@
+import { docWithMmeber } from "@/types";
+import { user } from "@prisma/client";
 import { create } from "zustand";
 
-export type modelType = "Login" | "register" | "newDoc";
+export type modelType = "Login" | "register" | "newDoc" | "share";
 
 export interface modelStore {
   type: modelType | null;
@@ -10,7 +12,10 @@ export interface modelStore {
   onClose: () => void;
 }
 
-interface modelData {}
+interface modelData {
+  currentUser?: user;
+  doc?: docWithMmeber;
+}
 
 export const useModal = create<modelStore>((set) => ({
   type: null,

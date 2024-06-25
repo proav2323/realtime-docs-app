@@ -10,5 +10,9 @@ export type docWithUser = Omit<doc, "createdBy"> & {
 };
 
 export type docWithMmeber = Omit<doc, "member"> & {
-  member: member[];
+  member: memberWithCreatedBy[];
+};
+
+export type memberWithCreatedBy = Omit<member, "user"> & {
+  user: user;
 };

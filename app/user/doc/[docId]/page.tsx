@@ -19,11 +19,17 @@ export default async function page({ params }: { params: { docId: string } }) {
   const doc: docWithMmeber = data[0];
   const host = doc.createdById === user.id;
   const member = doc.member.find((data) => data.userId === user.id);
-  const canEdit = host ? true : member ? member.role === "EDITER" ? true : false : false
+  const canEdit = host
+    ? true
+    : member
+    ? member.role === "EDITER"
+      ? true
+      : false
+    : false;
 
   return (
     <div className='flex flex-col justify-between items-start gap-2 w-full h-full edit'>
-      <DocEdit name={doc.name} id={doc.id} />
+      <DocEdit name={doc.name} id={doc.id} currentUser={user} doc={doc} />
       <Editer doc={doc} canEdit={canEdit} />
     </div>
   );

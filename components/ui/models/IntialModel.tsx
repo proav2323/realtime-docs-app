@@ -85,7 +85,7 @@ export default function LoginModel({
       open={data ? open : openH}
       onOpenChange={data ? () => {} : () => onClose()}
     >
-      <DialogContent className='flex flex-col justify-start items-start w-full gap-9'>
+      <DialogContent className='flex flex-col justify-start items-start w-full gap-9 overflow-y-scroll noScroll max-h-screen min-h-fit'>
         <Heading title='Welcome Back' subtitle='logint to your account' />
         <Form {...form}>
           <form

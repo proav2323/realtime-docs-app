@@ -25,7 +25,11 @@ export default async function getDocWitHid(id: string) {
       ],
     },
     include: {
-      member: true,
+      member: {
+        include: {
+          user: true,
+        },
+      },
     },
   });
 

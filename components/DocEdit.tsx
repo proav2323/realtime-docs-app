@@ -6,8 +6,23 @@ import React, { useState } from "react";
 import logo from "../public/icon.png";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { user } from "@prisma/client";
+import ProfileImg from "./ProfileImg";
+import { Button } from "./ui/button";
+import { useModal } from "./ui/hooks/useModel.store";
+import { docWithMmeber } from "@/types";
 
-export default function DocEdit({ name, id }: { name: string; id: string }) {
+export default function DocEdit({
+  name,
+  id,
+  doc,
+  currentUser,
+}: {
+  name: string;
+  id: string;
+  currentUser: user;
+  doc: docWithMmeber;
+}) {
   const router = useRouter();
   const [value, setValue] = useState(name);
   const [isFocusing, setIsFocusing] = useState(false);
@@ -30,25 +45,41 @@ export default function DocEdit({ name, id }: { name: string; id: string }) {
 
     setIsFocusing(false);
   };
+  const { onOpen } = useModal();
 
   return (
-    <div className='w-full p-2  justify-start flex flex-row items-center gap-2'>
-      <Image
-        onClick={() => router.push("/")}
-        src={logo}
-        width={30}
-        height={30}
-        alt='logo'
-        className='cursor-pointer'
-      />
-      <input
-        className=' p-2 md:w-[20vw] w-[90vw] focus:outline bg-transparent rounded-md h-[25px] dark:focus:outline-white focus:outline-black'
-        value={value}
-        placeholder=''
-        onFocus={() => setIsFocusing(true)}
-        onBlur={(e) => onChange(e)}
-        onChange={(e) => setValue(e.target.value)}
-      />
+    <div className='w-full p-2  justify-between flex flex-row items-center gap-2'>
+      <div className='p-2 justify-start flex flex-row items-center gap-2'>
+        <Image
+          onClick={() => router.push("/")}
+          src={logo}
+          width={30}
+          height={30}
+          alt='logo'
+          className='cursor-pointer'
+        />
+        <input
+          className=' p-2 md:w-[20vw] w-[90vw] focus:outline bg-transparent rounded-md h-[25px] dark:focus:outline-white focus:outline-black'
+          value={value}
+          placeholder=''
+          onFocus={() => setIsFocusing(true)}
+          onBlur={(e) => onChange(e)}
+          onChange={(e) => setValue(e.target.value)}
+        />
+      </div>
+
+      <div className='p-2 justify-start flex flex-row items-center gap-2'>
+        {currentUser.id === doc.createdById && (
+          <Button
+            onClick={() =>
+              onOpen("share", { currentUser: currentUser, doc: doc })
+            }
+          >
+            Share
+          </Button>
+        )}
+        <ProfileImg currentUser={currentUser} />
+      </div>
     </div>
   );
 }

@@ -61,7 +61,7 @@ export default function NewDoc() {
   const open = isOpen && type === "newDoc";
   return (
     <Dialog open={open} onOpenChange={() => onClose()}>
-      <DialogContent className='flex flex-col justify-start items-start w-full gap-9'>
+      <DialogContent className='flex flex-col justify-start items-start w-full gap-9 overflow-y-scroll noScroll max-h-screen min-h-fit'>
         <Heading title='New Doc' subtitle='name of your new document' />
         <Form {...form}>
           <form
