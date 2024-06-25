@@ -12,7 +12,22 @@ export default async function getDocWitHid(id: string) {
     return null;
   }
 
-  const doc = await db.doc.findUnique({ where: { id: id } });
+  const doc = await db.doc.findMany({
+    where: {
+      AND: [
+        { id: id },
+        {
+          OR: [
+            { createdById: currentUser.id },
+            { member: { some: { userId: currentUser.id, docId: id } } },
+          ],
+        },
+      ],
+    },
+    include: {
+      member: true,
+    },
+  });
 
   return doc;
 }

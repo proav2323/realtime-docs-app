@@ -8,3 +8,7 @@ export type userWithDoc = Omit<user, "docs" | "member"> & {
 export type docWithUser = Omit<doc, "createdBy"> & {
   createdBy: user;
 };
+
+export type docWithMmeber = Omit<doc, "member"> & {
+  member: member[];
+};

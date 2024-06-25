@@ -18,8 +18,26 @@ export async function PUT(
     return new NextResponse("login first", { status: 401 });
   }
 
-  const doc = await db.doc.update({
-    where: { id: params.docId, createdById: currentUser.id },
+  const doc = await db.doc.updateMany({
+    where: {
+      AND: [
+        { id: params.docId },
+        {
+          OR: [
+            { createdById: currentUser.id },
+            {
+              member: {
+                some: {
+                  docId: params.docId,
+                  userId: currentUser.id,
+                  role: "EDITER",
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
     data: { name: name },
   });
 

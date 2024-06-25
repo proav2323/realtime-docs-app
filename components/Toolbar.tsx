@@ -14,6 +14,7 @@ import {
   Link,
   List,
   Quote,
+  Save,
   Strikethrough,
   Underline,
 } from "lucide-react";
@@ -25,7 +26,15 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "./ui/button";
 
-export default function Toolbar({ editor }: { editor: Editor | null }) {
+export default function Toolbar({
+  editor,
+  handleSave,
+  canEdit,
+}: {
+  editor: Editor | null;
+  handleSave: any;
+  canEdit: boolean;
+}) {
   const [link, setLink] = useState("");
   const [imageLink, setImageLink] = useState("");
   const setBold = () => {
@@ -39,7 +48,7 @@ export default function Toolbar({ editor }: { editor: Editor | null }) {
     }
   };
 
-  if (!editor) {
+  if (!editor || !canEdit) {
     return;
   }
 
@@ -214,6 +223,13 @@ export default function Toolbar({ editor }: { editor: Editor | null }) {
         onClick={() => editor.chain().focus().setTextAlign("right").run()}
       >
         <AlignRight size={16} />
+      </div>
+
+      <div
+        onClick={() => handleSave()}
+        className={`${"dark:bg-neutral-900 bg-neutral-500"} p-2 rounded-md  hover:opacity-50 transition-all ease-in-out duration-200 cursor-pointer`}
+      >
+        <Save size={16} />
       </div>
     </div>
   );
