@@ -18,10 +18,17 @@ import Image from "next/image";
 import img from "../../public/icon.png";
 import { useTheme } from "next-themes";
 import { useModal } from "./hooks/useModel.store";
+import axios from "axios";
 
 export default function Navbar({ currentUser }: { currentUser: user }) {
   const theme = useTheme();
   const { onOpen } = useModal();
+  const router = useRouter();
+
+  const logout = async () => {
+    await axios.put("/api/logout");
+    router.refresh();
+  };
   return (
     <>
       <div className='hidden md:flex flex-row justify-between items-center sticky top-0 w-full h-[60px] dark:bg-slate-950 bg-slate-200 dark:text-white text-black px-2 py-2'>
@@ -62,7 +69,9 @@ export default function Navbar({ currentUser }: { currentUser: user }) {
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuSub>
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => logout()}>
+                Logout
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -95,7 +104,9 @@ export default function Navbar({ currentUser }: { currentUser: user }) {
                     </DropdownMenuItem>
                   </DropdownMenuSubContent>
                 </DropdownMenuSub>
-                <DropdownMenuItem>Logout</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => logout()}>
+                  Logout
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

@@ -34,13 +34,15 @@ export default function ShareModel() {
       }
       setLoading(true);
       axios
-        .post(`api/doc/${doc.id}/invite`, {
+        .post(`/api/doc/${doc.id}/invite`, {
           email: email,
           role: role,
           createdById: doc.createdById,
         })
         .then((data) => {
           toast.success("invite sent");
+          setEmail("");
+          setRole("");
           router.refresh();
         })
         .catch((err: any) => {
