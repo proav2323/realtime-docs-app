@@ -75,7 +75,12 @@ export default function ShareModel() {
         {members.length >= 1 && (
           <ScrollArea className='flex flex-col gap-2 justify-start items-start md:h-[20vh] h-[30vh]'>
             {members.map((data) => (
-              <MemberCard key={data.id} member={data} newM={false} />
+              <MemberCard
+                key={data.id}
+                member={data}
+                newM={false}
+                currentUser={currentUser}
+              />
             ))}
           </ScrollArea>
         )}

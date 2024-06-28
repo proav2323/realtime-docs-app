@@ -5,6 +5,7 @@ import LoginModel from "../models/IntialModel";
 import RegisterModel from "../models/RegisterModel";
 import NewDoc from "../models/NewDoc";
 import ShareModel from "../models/Share";
+import ManageAccess from "../models/ManageAccess";
 
 export default function ModelsProvider() {
   return (
@@ -13,6 +14,7 @@ export default function ModelsProvider() {
       <RegisterModel />
       <NewDoc />
       <ShareModel />
+      <ManageAccess />
     </>
   );
 }

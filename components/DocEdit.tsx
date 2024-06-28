@@ -11,6 +11,12 @@ import ProfileImg from "./ProfileImg";
 import { Button } from "./ui/button";
 import { useModal } from "./ui/hooks/useModel.store";
 import { docWithMmeber } from "@/types";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 export default function DocEdit({
   name,
@@ -47,8 +53,13 @@ export default function DocEdit({
   };
   const { onOpen } = useModal();
 
+  const logout = async () => {
+    await axios.put("/api/logout");
+    router.refresh();
+  };
+
   return (
-    <div className='w-full p-2  justify-between flex flex-row items-center gap-2'>
+    <div className='w-full p-2  justify-between flex md:flex-row flex-col items-center gap-2'>
       <div className='p-2 justify-start flex flex-row items-center gap-2'>
         <Image
           onClick={() => router.push("/")}
@@ -78,7 +89,21 @@ export default function DocEdit({
             Share
           </Button>
         )}
-        <ProfileImg currentUser={currentUser} />
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <ProfileImg currentUser={currentUser} />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem onClick={() => logout()}>Logout</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                onOpen("manageAccess", { currentUser: currentUser, doc: doc })
+              }
+            >
+              Manage Access
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   );

@@ -12,7 +12,6 @@ export default async function getCurrentUser() {
   }
   let decode;
   try {
-    console.log(session.value);
     decode = jwt.verify(
       session.value,
       process.env.SECRET ?? "THISSBJSBDJSBFJBDSJBFJDBSF DSFDSJFJDSB"

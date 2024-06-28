@@ -2,7 +2,12 @@ import { docWithMmeber } from "@/types";
 import { user } from "@prisma/client";
 import { create } from "zustand";
 
-export type modelType = "Login" | "register" | "newDoc" | "share";
+export type modelType =
+  | "Login"
+  | "register"
+  | "newDoc"
+  | "share"
+  | "manageAccess";
 
 export interface modelStore {
   type: modelType | null;
