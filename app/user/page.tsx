@@ -6,9 +6,17 @@ import { docWithUser } from "@/types";
 import { redirect } from "next/navigation";
 import React from "react";
 
-export default async function page() {
+export interface seachParamsIterface {
+  search: string;
+}
+
+export default async function page({
+  searchParams,
+}: {
+  searchParams?: seachParamsIterface;
+}) {
   const currentUser = await getCurrentUser();
-  const docs: docWithUser[] = await getUserDocs();
+  const docs: docWithUser[] = await getUserDocs(searchParams);
 
   if (!currentUser) {
     return redirect("/");

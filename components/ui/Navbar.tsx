@@ -1,7 +1,7 @@
 "use client";
 import { user } from "@prisma/client";
-import { usePathname, useRouter } from "next/navigation";
-import React from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React, { useState } from "react";
 import { Button } from "./button";
 import { Plus, Search } from "lucide-react";
 import ProfileImg from "../ProfileImg";
@@ -22,12 +22,20 @@ import axios from "axios";
 
 export default function Navbar({ currentUser }: { currentUser: user }) {
   const theme = useTheme();
+  const params = useSearchParams();
+  const [searchText, setSearchText] = useState(params.get("search") ?? "");
   const { onOpen } = useModal();
   const router = useRouter();
 
   const logout = async () => {
     await axios.put("/api/logout");
     router.refresh();
+  };
+
+  const search = () => {
+    if (searchText) {
+      router.replace(`/user?search=${searchText}`);
+    }
   };
   return (
     <>
@@ -46,6 +54,13 @@ export default function Navbar({ currentUser }: { currentUser: user }) {
               type='search'
               className='px-0 py-2 w-full dark:bg-slate-800 rounded-r-full bg-slate-100 outline-none border-none h-[40px]'
               placeholder='Search Documents'
+              onChange={(e) => setSearchText(e.target.value)}
+              value={searchText}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  search();
+                }
+              }}
             />
           </div>
           <Button variant={"outline"} onClick={() => onOpen("newDoc")}>
