@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../public/icon.png";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -17,6 +17,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { IoSocket } from "@/utill/socket";
+import { BluetoothConnectedIcon } from "lucide-react";
 
 export default function DocEdit({
   name,
@@ -32,6 +34,8 @@ export default function DocEdit({
   const router = useRouter();
   const [value, setValue] = useState(name);
   const [isFocusing, setIsFocusing] = useState(false);
+  const [connected, setConnected] = useState(IoSocket.connected);
+  const [isClient, setIsClient] = useState(false);
 
   const onChange = async (e: any) => {
     const text = value;
@@ -58,6 +62,15 @@ export default function DocEdit({
     router.refresh();
   };
 
+  useEffect(() => {
+    IoSocket.on("connect", () => {
+      IoSocket.emit("joinRoom", doc.inviteUrl);
+      setConnected(true);
+    });
+
+    setIsClient(true);
+  }, [doc.inviteUrl]);
+
   return (
     <div className='w-full p-2  justify-between flex md:flex-row flex-col items-center gap-2'>
       <div className='p-2 justify-start flex flex-row items-center gap-2'>
@@ -80,6 +93,11 @@ export default function DocEdit({
       </div>
 
       <div className='p-2 justify-start flex flex-row items-center gap-2'>
+        {isClient && connected === true ? (
+          <span className='text-sm text-green-500'>Connected</span>
+        ) : (
+          <span className='text-sm text-red-500'>Connection Failed</span>
+        )}
         {currentUser.id === doc.createdById && (
           <Button
             onClick={() =>

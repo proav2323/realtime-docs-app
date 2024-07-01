@@ -12,6 +12,7 @@ import Align from "@tiptap/extension-text-align";
 import { doc } from "@prisma/client";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { IoSocket } from "@/utill/socket";
 export default function Editerr({
   doc,
   canEdit,
@@ -33,6 +34,10 @@ export default function Editerr({
     content: model,
     onUpdate: (editor) => {
       setModel(editor.editor.getHTML());
+      IoSocket.emit("textChange", {
+        room: doc.inviteUrl,
+        text: editor.editor.getHTML(),
+      });
     },
     editable: canEdit,
   });
@@ -47,6 +52,14 @@ export default function Editerr({
         toast.error(err.response.data);
       });
   };
+
+  useEffect(() => {
+    IoSocket.on("connect", () => {
+      IoSocket.on("recieveText", (text) => {
+        setModel(text);
+      });
+    });
+  }, []);
 
   return (
     <div className='dark:text-white text-black w-full h-full rounded-md flex flex-col'>
