@@ -13,6 +13,10 @@ import { doc } from "@prisma/client";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { IoSocket } from "@/utill/socket";
+import Collaboration from "@tiptap/extension-collaboration";
+import * as Y from "yjs";
+import { TiptapCollabProvider } from "@hocuspocus/provider";
+
 export default function Editerr({
   doc,
   canEdit,
@@ -20,6 +24,7 @@ export default function Editerr({
   doc: doc;
   canEdit: boolean;
 }) {
+  const docC = new Y.Doc();
   const editorRef = useRef(null);
   const [model, setModel] = useState(doc.Text);
 
@@ -31,7 +36,6 @@ export default function Editerr({
       ImageExt,
       Align.configure({ types: ["heading", "paragraph"] }),
     ],
-    content: model,
     onUpdate: (editor) => {
       setModel(editor.editor.getHTML());
       IoSocket.emit("textChange", {
@@ -39,6 +43,7 @@ export default function Editerr({
         text: editor.editor.getHTML(),
       });
     },
+    content: model,
     editable: canEdit,
   });
 
@@ -57,9 +62,10 @@ export default function Editerr({
     IoSocket.on("connect", () => {
       IoSocket.on("recieveText", (text) => {
         setModel(text);
+        editor?.commands.setContent(text);
       });
     });
-  }, []);
+  }, [editor]);
 
   return (
     <div className='dark:text-white text-black w-full h-full rounded-md flex flex-col'>
