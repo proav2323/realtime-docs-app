@@ -16,6 +16,9 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import format from "dateformat";
 import { Checkbox } from "./checkbox";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 export const columns: ColumnDef<docWithUser>[] = [
   {
@@ -75,6 +78,24 @@ export const columns: ColumnDef<docWithUser>[] = [
       const doc = row.original;
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const router = useRouter();
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [loading, setLoading] = useState(false);
+
+      const deleteDoc = () => {
+        setLoading(true);
+        axios
+          .delete(`/api/doc/${doc.id}`)
+          .then((data) => {
+            toast.success("document deleted");
+            router.refresh();
+          })
+          .catch((err) => {
+            toast.error(err.response.data);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      };
 
       return (
         <DropdownMenu>
@@ -86,7 +107,9 @@ export const columns: ColumnDef<docWithUser>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>delete</DropdownMenuItem>
+            <DropdownMenuItem disabled={loading} onClick={() => deleteDoc()}>
+              delete
+            </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => router.push(`/user/doc/${doc.id}`)}
             >

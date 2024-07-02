@@ -25,6 +25,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "./ui/button";
+import Loader from "./Loader";
 
 export default function Toolbar({
   editor,
@@ -48,8 +49,12 @@ export default function Toolbar({
     }
   };
 
-  if (!editor || !canEdit) {
+  if (!canEdit) {
     return;
+  }
+
+  if (!editor) {
+    return <Loader />;
   }
 
   const addLink = () => {
